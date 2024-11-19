@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Api\CarWasherController;
 use App\Http\Controllers\Api\WashingCenterController;
+use App\Http\Controllers\Api\AuthController;
 
 
 // API routes for User Profiles (with JSON responses)
@@ -35,3 +36,15 @@ Route::put('/washing_centers/{id}', [WashingCenterController::class, 'update']);
 
 // Delete a washing center
 Route::delete('/washing_centers/{id}', [WashingCenterController::class, 'destroy']);
+
+// Signup route
+Route::post('/signup', [AuthController::class, 'signup']);
+
+// Login route
+Route::post('/login', [AuthController::class, 'login']);
+
+// Vehicle selection routes
+Route::post('/vehicle/select/{user}', [AuthController::class, 'storeVehicleSelection']);
+
+// Address selection routes
+Route::post('/address/select/{user}', [AuthController::class, 'storeAddressSelection']);
