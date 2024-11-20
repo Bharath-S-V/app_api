@@ -37,14 +37,13 @@ Route::put('/washing_centers/{id}', [WashingCenterController::class, 'update']);
 // Delete a washing center
 Route::delete('/washing_centers/{id}', [WashingCenterController::class, 'destroy']);
 
-// Signup route
+// Signup Route
 Route::post('/signup', [AuthController::class, 'signup']);
-
-// Login route
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-// Vehicle selection routes
-Route::post('/vehicle/select/{user}', [AuthController::class, 'storeVehicleSelection']);
-
-// Address selection routes
-Route::post('/address/select/{user}', [AuthController::class, 'storeAddressSelection']);
+Route::middleware('auth:api')->group(function () {
+    // Routes that require the user to be authenticated
+    Route::post('/vehicle/select/{user}', [AuthController::class, 'storeVehicleSelection']);
+    Route::post('/address/select/{user}', [AuthController::class, 'storeAddressSelection']);
+});

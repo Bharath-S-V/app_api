@@ -5,6 +5,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\CarWasherController;
 use App\Http\Controllers\WashingCenterController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 // Default homepage route
 Route::get('/', function () {
@@ -27,7 +28,8 @@ Route::resource('car_washers', CarWasherController::class);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::view('/signup', 'signup')->name('signup.view');
-Route::view('/login', 'login')->name('login.view');
+Route::view('/login', 'login')->name('login');  // Use 'login' instead of 'login.view'
+
 
 Route::get('/vehicle/select/{user}', [AuthController::class, 'showVehicleSelectionForm'])->name('vehicle.select');
 Route::post('/vehicle/select/{user}', [AuthController::class, 'storeVehicleSelection']);
@@ -38,6 +40,7 @@ Route::get('/address/select/{user}', [AuthController::class, 'showAddressSelecti
 // Store the address after selection
 Route::post('/address/select/{user}', [AuthController::class, 'storeAddressSelection']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth')->name(name: 'dashboard');
+
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

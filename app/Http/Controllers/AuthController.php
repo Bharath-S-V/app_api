@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserProfile;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -18,11 +20,14 @@ class AuthController extends Controller
             'phone' => $request->phone,
         ]);
 
+        // Log the user in
+        auth()->login($userProfile);
+
         // Redirect to the vehicle selection page
         return redirect()->route('vehicle.select', ['user' => $userProfile->id]);
     }
 
-    // Login method
+
     public function login(Request $request)
     {
         $request->validate([
@@ -31,9 +36,13 @@ class AuthController extends Controller
 
         $userProfile = UserProfile::where('phone', $request->phone)->first();
 
-        // In real-world apps, generate a token for authentication
-        return redirect()->route('dashboard', ['user' => $userProfile->id])->with('message', 'user logged successfully');
+        // Log the user in
+        auth()->login($userProfile);
+
+        // Redirect to the dashboard
+        return redirect()->route('dashboard')->with('message', 'User logged in successfully');
     }
+
     // Show vehicle selection form
     public function showVehicleSelectionForm($userId)
     {
@@ -81,5 +90,10 @@ class AuthController extends Controller
 
         // Redirect to a success page or dashboard after the address is saved
         return redirect()->route('dashboard')->with('message', 'Address saved successfully!');
+    }
+    public function logout()
+    {
+        auth()->logout();
+        return redirect()->route('login')->with('message', 'Logged out successfully');
     }
 }
