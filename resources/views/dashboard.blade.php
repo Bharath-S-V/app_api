@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3>Welcome to the Dashboard, {{ $user->phone }}</h3> <!-- Display phone number or any other data -->
+            <h3>Welcome to the Dashboard, {{ $user->name }}</h3> <!-- Display phone number or any other data -->
         </div>
         <div class="card-body">
             <p>Your registration is complete. Welcome to the dashboard!</p>

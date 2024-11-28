@@ -1,24 +1,44 @@
-@extends('layouts.app')
+@extends('layouts.car-app')
+@section('title', 'user profiles')
 
 @section('content')
-    <h1 class="mb-4 text-center">User Profiles</h1>
 
-    <a href="{{ route('profiles.create') }}" class="btn btn-primary mb-3">Create Profile</a>
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <h1 class="mt-5 text-center">User Profiles</h1>
+            <div class="row">
+                <a href="{{ route('profiles.create') }}" class="btn btn-primary mb-3">Create Profile</a>
 
-    <div class="row">
-        @foreach ($profiles as $profile)
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
-                    {{-- <img src="https://via.placeholder.com/150" class="card-img-top rounded-top" alt="{{ $profile->name }}'s profile picture"> --}}
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">{{ $profile->name }}</h5>
-                        <p class="card-text text-muted">{{ $profile->email }}</p>
-                        <p class="card-text text-success"><small>{{ $profile->vehicle_type }}</small></p>
-                        <a href="{{ route('profiles.show', $profile->id) }}" class="btn btn-outline-primary btn-sm">View Profile</a>
-                    </div>
+
+                <div class="table-responsive mb-0">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>phone</th>
+                                <th>Email</th>
+                                <th>Vehicle Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($profiles as $profile)
+                                <tr>
+                                    <td>{{ $profile->name ?? 'not defined' }}</td>
+                                    <td>{{ $profile->phone ?? 'XXXXXXXXXX' }}</td>
+                                    <td>{{ $profile->email ?? 'not defined' }}</td>
+                                    <td>{{ $profile->vehicle_type ?? 'not defined' }}</td>
+                                    <td>
+                                        <a href="{{ route('profiles.show', $profile->id) }}"
+                                            class="btn btn-outline-primary btn-sm">View Profile</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        @endforeach
-    </div>
-@endsection
 
+            </div><!-- end row-->
+        </div><!-- container -->
+    </div><!-- Page content Wrapper -->
+@endsection
